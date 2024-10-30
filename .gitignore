@@ -38,3 +38,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IntelliJ IDEA / WebStorm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+*.code-workspace
