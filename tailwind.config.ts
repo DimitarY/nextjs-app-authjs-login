@@ -56,6 +56,10 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      height: {
+        header: "8dvh",
+        "full-without-header": "calc(100dvh - 8dvh)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
