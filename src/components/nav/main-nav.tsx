@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import { ModeToggle } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
@@ -100,6 +101,7 @@ export default function MainNav({ items }: MainNavProps) {
             </div>
           ) : null}
           <div className="mt-4 flex gap-2">
+            <ModeToggle />
             <AuthButtons />
           </div>
         </SheetContent>
@@ -154,6 +156,7 @@ export default function MainNav({ items }: MainNavProps) {
         ) : null}
       </NavigationMenu>
       <div className="ml-auto hidden gap-2 lg:flex">
+        <ModeToggle />
         <AuthButtons />
       </div>
     </>
