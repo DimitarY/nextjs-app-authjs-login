@@ -1,4 +1,5 @@
 import MainNav from "@/components/nav/main-nav";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
@@ -27,9 +28,8 @@ export default function RootLayout({
           <header className="flex h-header w-full shrink-0 items-center px-4 md:px-6">
             <MainNav items={siteConfig.mainNav} />
           </header>
-          <main className="h-full-without-header flex-1 overflow-hidden">
-            {children}
-          </main>
+          <main className="flex-1 overflow-hidden">{children}</main>
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>
