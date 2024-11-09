@@ -1,4 +1,5 @@
 import MainNav from "@/components/nav/main-nav";
+import { ReactQueryClientProvider } from "@/components/react-query-client-provider";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
@@ -28,7 +29,9 @@ export default function RootLayout({
           <header className="flex h-header w-full shrink-0 items-center px-4 md:px-6">
             <MainNav items={siteConfig.mainNav} />
           </header>
-          <main className="flex-1 overflow-hidden">{children}</main>
+          <ReactQueryClientProvider>
+            <main className="flex-1 overflow-hidden">{children}</main>
+          </ReactQueryClientProvider>
           <TailwindIndicator />
         </ThemeProvider>
       </body>

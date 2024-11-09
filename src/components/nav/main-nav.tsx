@@ -26,7 +26,7 @@ function AuthButtons() {
   return (
     <>
       <Button asChild variant="outline">
-        <Link href="/auth/sign-in">Sign in</Link>
+        <Link href="/auth/sign-in">Sign In</Link>
       </Button>
       <Button asChild>
         <Link href="/auth/sign-up">Sign Up</Link>
