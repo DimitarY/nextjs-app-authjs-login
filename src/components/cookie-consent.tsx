@@ -24,7 +24,7 @@ export default function CookieConsent({
   const accept = () => {
     const expirationDate = getCookieExpirationDate();
     setIsOpen(false);
-    document.cookie = `cookieConsent=true; expires=${expirationDate}; path=/; SameSite=Lax`;
+    document.cookie = `cookieConsent=true; expires=${expirationDate}; path=/; SameSite=Lax; Secure`;
     setTimeout(() => {
       setHide(true);
     }, 700);
@@ -34,7 +34,7 @@ export default function CookieConsent({
   const decline = () => {
     const expirationDate = getCookieExpirationDate();
     setIsOpen(false);
-    document.cookie = `cookieConsent=false; expires=${expirationDate}; path=/; SameSite=Lax`;
+    document.cookie = `cookieConsent=false; expires=${expirationDate}; path=/; SameSite=Lax; Secure`;
     setTimeout(() => {
       setHide(true);
     }, 700);
@@ -93,8 +93,8 @@ export default function CookieConsent({
                 agree to our use of cookies.
               </span>
               <br />
-              <Link href="/privacy" className="text-xs">
-                Learn more.
+              <Link href="/privacy" className="text-xs underline">
+                Learn more
               </Link>
             </p>
           </div>
