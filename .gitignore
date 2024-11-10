@@ -46,3 +46,6 @@ next-env.d.ts
 # VS Code
 .vscode/
 *.code-workspace
+
+# certificates
+/certificates/
