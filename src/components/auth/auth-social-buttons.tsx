@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithubAlt } from "react-icons/vsc";
 
-interface MessageProps {
+interface AuthSocialButtonsProps {
   className?: string;
 }
 
-export function AuthSocialButtons({ className }: MessageProps) {
+export function AuthSocialButtons({ className }: AuthSocialButtonsProps) {
   const onClick = (provider: "google" | "github") => {
     console.log(provider);
   };

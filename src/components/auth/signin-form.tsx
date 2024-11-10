@@ -22,11 +22,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-interface MessageProps {
+interface SignInFormProps {
   className?: string;
 }
 
-export function SignInForm({ className }: MessageProps) {
+export function SignInForm({ className }: SignInFormProps) {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
 

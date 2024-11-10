@@ -23,11 +23,11 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { z } from "zod";
 
-interface MessageProps {
+interface SignUpFormProps {
   className?: string;
 }
 
-export function SignUpForm({ className }: MessageProps) {
+export function SignUpForm({ className }: SignUpFormProps) {
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);

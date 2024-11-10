@@ -20,3 +20,12 @@ export const RegisterSchema = z.object({
     .trim(),
   password: z.string().min(1, "Password is required").trim(), // TODO: Add regex validation
 });
+
+export const ForgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email address")
+    .toLowerCase()
+    .trim(),
+});
