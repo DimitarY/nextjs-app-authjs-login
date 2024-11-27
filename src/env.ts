@@ -7,6 +7,14 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    DATABASE_URL: z.string().url(),
+    CUID_FINGERPRINT: z.string(),
+    AUTH_SECRET: z.string(),
+    AUTH_URL: z.string().url(),
+    AUTH_GOOGLE_ID: z.string(),
+    AUTH_GOOGLE_SECRET: z.string(),
+    AUTH_GITHUB_ID: z.string(),
+    AUTH_GITHUB_SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_BASE_URL: z.string().url(),

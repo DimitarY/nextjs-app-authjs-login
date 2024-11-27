@@ -1,5 +1,8 @@
 "use client";
 
+import { LoginAction } from "@/actions/auth";
+import { navigate } from "@/actions/navigate";
+import { AuthErrorMessage } from "@/components/auth/auth-error";
 import { AuthSocialButtons } from "@/components/auth/auth-social-buttons";
 import { FormError, FormSuccess } from "@/components/form-message";
 import { Button } from "@/components/ui/button";
@@ -18,7 +21,8 @@ import { LoginSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -27,23 +31,28 @@ interface SignInFormProps {
 }
 
 export function SignInForm({ className }: SignInFormProps) {
+  const search = useSearchParams();
   const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const { mutate: server_LoginAction, isPending: server_LoginActionIsPending } =
     useMutation({
-      mutationFn: async (values: z.infer<typeof LoginSchema>) => {
-        console.log(values);
-      },
+      mutationFn: LoginAction,
       onMutate: () => {
         setSuccess("");
         setError("");
       },
-      onSuccess: () => {
-        setSuccess("Registration successful!");
+      onSuccess: async (data) => {
+        if (!data.success) {
+          setError(data.error);
+        } else {
+          const callbackUrl = search.get("callbackUrl");
+          setSuccess("Login successful");
+          await navigate(callbackUrl || "/"); // TODO: failed to get redirect response TypeError: fetch failed (Maybe react-dom RC issue)
+        }
       },
-      onError: (error) => {
-        setError(error.message ?? "An error occurred. Please try again.");
+      onError: () => {
+        setError("An unexpected error occurred. Please try again.");
       },
     });
 
@@ -68,7 +77,9 @@ export function SignInForm({ className }: SignInFormProps) {
         <h1 className="text-3xl">Welcome back</h1>
         <p className="">Sign in to your account</p>
       </div>
-      <AuthSocialButtons />
+      <Suspense>
+        <AuthSocialButtons />
+      </Suspense>
       <div className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
         or
       </div>
@@ -121,7 +132,7 @@ export function SignInForm({ className }: SignInFormProps) {
               type="submit"
               disabled={server_LoginActionIsPending}
             >
-              Register
+              Login
             </Button>
           </div>
         </form>
@@ -132,6 +143,7 @@ export function SignInForm({ className }: SignInFormProps) {
           Sign up
         </Link>
       </div>
+      <AuthErrorMessage className="mt-4" />
       <span className="text-foreground-lighter mt-4 text-xs sm:text-center">
         By continuing, you agree to {siteConfig.name}{" "}
         <Link href="/terms" className="underline">

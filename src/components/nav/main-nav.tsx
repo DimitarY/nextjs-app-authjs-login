@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import { AccountNav } from "@/components/nav/account-nav";
 import { ModeToggle } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Auth from "@/lib/auth";
 import { MainNavItem } from "@/types";
 import Link from "next/link";
 
@@ -35,7 +37,9 @@ function AuthButtons() {
   );
 }
 
-export default function MainNav({ items }: MainNavProps) {
+export default async function MainNav({ items }: MainNavProps) {
+  const session = await Auth(); // TODO: Because of this, every page that use MainNav will be Dynamic
+
   return (
     <>
       <Sheet>
@@ -102,7 +106,7 @@ export default function MainNav({ items }: MainNavProps) {
           ) : null}
           <div className="mt-4 flex gap-2">
             <ModeToggle />
-            <AuthButtons />
+            {session ? <AccountNav /> : <AuthButtons />}
           </div>
         </SheetContent>
       </Sheet>
@@ -157,7 +161,7 @@ export default function MainNav({ items }: MainNavProps) {
       </NavigationMenu>
       <div className="ml-auto hidden gap-2 lg:flex">
         <ModeToggle />
-        <AuthButtons />
+        {session ? <AccountNav /> : <AuthButtons />}
       </div>
     </>
   );

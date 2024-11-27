@@ -1,5 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithubAlt } from "react-icons/vsc";
 
@@ -8,8 +12,13 @@ interface AuthSocialButtonsProps {
 }
 
 export function AuthSocialButtons({ className }: AuthSocialButtonsProps) {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
   const onClick = (provider: "google" | "github") => {
-    console.log(provider);
+    signIn(provider, {
+      redirectTo: callbackUrl || window.location.href,
+    }).then();
   };
 
   return (

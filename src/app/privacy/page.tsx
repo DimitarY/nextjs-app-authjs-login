@@ -181,7 +181,7 @@ export default function PrivacyPolicy() {
             </li>
             <li>
               <Link
-                href="http://support.mozilla.org/en-US/kb/cookies"
+                href="https://support.mozilla.org/en-US/kb/cookies"
                 className="text-blue-500 underline dark:text-blue-400"
               >
                 Cookie settings in Firefox
