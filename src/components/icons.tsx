@@ -1,6 +1,7 @@
 import {
   ChevronRight,
   Command,
+  CropIcon,
   Laptop,
   LayoutDashboard,
   LogOut,
@@ -8,6 +9,7 @@ import {
   Moon,
   Settings,
   SunMedium,
+  Trash2Icon,
   User,
 } from "lucide-react";
 
@@ -22,4 +24,6 @@ export const Icons = {
   settings: Settings,
   dashboard: LayoutDashboard,
   logOut: LogOut,
+  crop: CropIcon,
+  thrash: Trash2Icon,
 };
