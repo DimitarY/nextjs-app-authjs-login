@@ -65,9 +65,6 @@ export function SignInForm({ className }: SignInFormProps) {
   });
 
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    setSuccess("");
-    setError("");
-
     server_LoginAction(values);
   };
 
@@ -96,6 +93,7 @@ export function SignInForm({ className }: SignInFormProps) {
                     <Input
                       placeholder="you@example.com"
                       {...field}
+                      type="email"
                       disabled={server_LoginActionIsPending}
                     />
                   </FormControl>
@@ -114,9 +112,9 @@ export function SignInForm({ className }: SignInFormProps) {
                   </div>
                   <FormControl>
                     <Input
-                      type="password"
                       placeholder="●●●●●●●●"
                       {...field}
+                      type="password"
                       disabled={server_LoginActionIsPending}
                     />
                   </FormControl>

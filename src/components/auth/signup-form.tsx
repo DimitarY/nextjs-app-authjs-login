@@ -70,9 +70,6 @@ export function SignUpForm({ className }: SignUpFormProps) {
   });
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
-    setSuccess("");
-    setError("");
-
     server_RegisterAction(values);
   };
 
@@ -118,6 +115,7 @@ export function SignUpForm({ className }: SignUpFormProps) {
                     <Input
                       placeholder="you@example.com"
                       {...field}
+                      type="email"
                       disabled={server_RegisterActionIsPending}
                     />
                   </FormControl>
@@ -135,9 +133,9 @@ export function SignUpForm({ className }: SignUpFormProps) {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        type={passwordVisible ? "text" : "password"}
                         placeholder="●●●●●●●●"
                         {...field}
+                        type={passwordVisible ? "text" : "password"}
                         disabled={server_RegisterActionIsPending}
                       />
                       <button

@@ -55,9 +55,6 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
   });
 
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
-    setSuccess("");
-    setError("");
-
     server_ForgotPasswordAction(values);
   };
 
@@ -83,6 +80,7 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
                     <Input
                       placeholder="you@example.com"
                       {...field}
+                      type="email"
                       disabled={server_ForgotPasswordIsPending}
                     />
                   </FormControl>
