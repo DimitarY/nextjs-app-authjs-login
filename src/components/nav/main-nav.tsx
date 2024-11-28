@@ -15,7 +15,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import Auth from "@/lib/auth";
 import { MainNavItem } from "@/types";
 import Link from "next/link";
@@ -50,23 +55,23 @@ export default async function MainNav({ items }: MainNavProps) {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <SheetTrigger asChild>
+          <SheetClose asChild>
             <Link href="/">
               <Icons.logo />
             </Link>
-          </SheetTrigger>
+          </SheetClose>
           {items.length ? (
             <div className="grid gap-2 py-6">
               {items.map((item, index) =>
                 "href" in item ? (
-                  <SheetTrigger key={index} asChild>
+                  <SheetClose key={index} asChild>
                     <Link
                       href={item.href}
                       className="flex w-full items-center py-2 font-semibold"
                     >
                       {item.title}
                     </Link>
-                  </SheetTrigger>
+                  </SheetClose>
                 ) : (
                   <Collapsible key={index} className="grid gap-4 py-2">
                     <CollapsibleTrigger className="flex w-full items-center font-semibold [&[data-state=open]>svg]:rotate-90">
@@ -80,7 +85,7 @@ export default async function MainNav({ items }: MainNavProps) {
                             key={subIndex}
                             className="rounded-md border px-4 py-3 font-mono text-sm"
                           >
-                            <SheetTrigger asChild>
+                            <SheetClose asChild>
                               <Link
                                 href={subItem.href}
                                 className="group grid h-auto w-full justify-start gap-1"
@@ -94,7 +99,7 @@ export default async function MainNav({ items }: MainNavProps) {
                                   </div>
                                 )}
                               </Link>
-                            </SheetTrigger>
+                            </SheetClose>
                           </div>
                         ))}
                       </div>
