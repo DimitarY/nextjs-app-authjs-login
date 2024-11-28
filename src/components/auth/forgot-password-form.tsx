@@ -40,10 +40,10 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
       setError("");
     },
     onSuccess: () => {
-      setSuccess("Registration successful!");
+      setSuccess("Password reset email sent! Please check your inbox.");
     },
-    onError: (error) => {
-      setError(error.message ?? "An error occurred. Please try again.");
+    onError: () => {
+      setError("An unexpected error occurred. Please try again.");
     },
   });
 
