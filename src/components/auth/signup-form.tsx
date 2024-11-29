@@ -52,6 +52,7 @@ export function SignUpForm({ className }: SignUpFormProps) {
       } else {
         const callbackUrl = search.get("callbackUrl");
         setSuccess("Registration successful");
+        await new Promise((resolve) => setTimeout(resolve, 500));
         await navigate(callbackUrl || "/auth/sign-in"); // TODO: failed to get redirect response TypeError: fetch failed (Maybe react-dom RC issue)
       }
     },

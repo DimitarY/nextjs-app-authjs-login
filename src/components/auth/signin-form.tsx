@@ -4,7 +4,7 @@ import { LoginAction } from "@/actions/auth";
 import { navigate } from "@/actions/navigate";
 import { AuthErrorMessage } from "@/components/auth/auth-error";
 import { AuthSocialButtons } from "@/components/auth/auth-social-buttons";
-import { FormError, FormSuccess } from "@/components/form-message";
+import { FormError } from "@/components/form-message";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -32,14 +32,12 @@ interface SignInFormProps {
 
 export function SignInForm({ className }: SignInFormProps) {
   const search = useSearchParams();
-  const [success, setSuccess] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const { mutate: server_LoginAction, isPending: server_LoginActionIsPending } =
     useMutation({
       mutationFn: LoginAction,
       onMutate: () => {
-        setSuccess("");
         setError("");
       },
       onSuccess: async (data) => {
@@ -47,7 +45,6 @@ export function SignInForm({ className }: SignInFormProps) {
           setError(data.error);
         } else {
           const callbackUrl = search.get("callbackUrl");
-          setSuccess("Login successful");
           await navigate(callbackUrl || "/"); // TODO: failed to get redirect response TypeError: fetch failed (Maybe react-dom RC issue)
         }
       },
@@ -125,7 +122,6 @@ export function SignInForm({ className }: SignInFormProps) {
                 </FormItem>
               )}
             />
-            <FormSuccess message={success} />
             <FormError message={error} />
             <Button
               className="w-full"
