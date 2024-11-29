@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -29,7 +30,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <header className="flex h-header w-full shrink-0 items-center px-4 md:px-6">
-            <MainNav items={siteConfig.mainNav} />
+            <SessionProvider>
+              <MainNav items={siteConfig.mainNav} />
+            </SessionProvider>
           </header>
           <ReactQueryClientProvider>
             <main className="flex-1 overflow-hidden">{children}</main>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Icons } from "@/components/icons";
 import { AccountNav } from "@/components/nav/account-nav";
 import { ModeToggle } from "@/components/theme-switcher";
@@ -21,29 +23,16 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Auth from "@/lib/auth";
 import { MainNavItem } from "@/types";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface MainNavProps {
   items: MainNavItem[];
 }
 
-function AuthButtons() {
-  return (
-    <>
-      <Button asChild variant="outline">
-        <Link href="/auth/sign-in">Sign In</Link>
-      </Button>
-      <Button asChild>
-        <Link href="/auth/sign-up">Sign Up</Link>
-      </Button>
-    </>
-  );
-}
-
-export default async function MainNav({ items }: MainNavProps) {
-  const session = await Auth(); // TODO: Because of this, every page that use MainNav will be Dynamic
+export default function MainNav({ items }: MainNavProps) {
+  const { data: session } = useSession();
 
   return (
     <>
@@ -111,7 +100,22 @@ export default async function MainNav({ items }: MainNavProps) {
           ) : null}
           <div className="mt-4 flex gap-2">
             <ModeToggle />
-            {session ? <AccountNav /> : <AuthButtons />}
+            {session ? (
+              <AccountNav session={session} />
+            ) : (
+              <>
+                <SheetClose asChild>
+                  <Button asChild variant="outline">
+                    <Link href="/auth/sign-in">Sign In</Link>
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button asChild>
+                    <Link href="/auth/sign-up">Sign Up</Link>
+                  </Button>
+                </SheetClose>
+              </>
+            )}
           </div>
         </SheetContent>
       </Sheet>
@@ -166,7 +170,18 @@ export default async function MainNav({ items }: MainNavProps) {
       </NavigationMenu>
       <div className="ml-auto hidden gap-2 lg:flex">
         <ModeToggle />
-        {session ? <AccountNav /> : <AuthButtons />}
+        {session ? (
+          <AccountNav session={session} />
+        ) : (
+          <>
+            <Button asChild variant="outline">
+              <Link href="/auth/sign-in">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/auth/sign-up">Sign Up</Link>
+            </Button>
+          </>
+        )}
       </div>
     </>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import { Icons } from "@/components/icons";
 import SignOutDropdownMenuItem from "@/components/nav/sign-out-dropdown-menu-item";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,12 +13,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SheetClose } from "@/components/ui/sheet";
 import { UserRole } from "@/db/schema/enumerated";
-import Auth from "@/lib/auth";
+import { useIsMobile } from "@/hooks/use-is-mobile";
+import { Session } from "next-auth";
 import Link from "next/link";
 
-export async function AccountNav() {
-  const session = await Auth();
+export function AccountNav({ session }: { session: Session }) {
+  const isMobile = useIsMobile();
 
   if (session) {
     const userName = session.user.name as string;
@@ -43,26 +47,53 @@ export async function AccountNav() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href="/profile" className="flex gap-2">
-                <Icons.user />
-                <span>Profile</span>
-              </Link>
+              {isMobile ? (
+                <SheetClose asChild>
+                  <Link href="/profile" className="flex gap-2">
+                    <Icons.user />
+                    <span>Profile</span>
+                  </Link>
+                </SheetClose>
+              ) : (
+                <Link href="/profile" className="flex gap-2">
+                  <Icons.user />
+                  <span>Profile</span>
+                </Link>
+              )}
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/profile/settings" className="flex gap-2">
-                <Icons.settings />
-                <span>Settings</span>
-              </Link>
+              {isMobile ? (
+                <SheetClose asChild>
+                  <Link href="/profile/settings" className="flex gap-2">
+                    <Icons.settings />
+                    <span>Settings</span>
+                  </Link>
+                </SheetClose>
+              ) : (
+                <Link href="/profile/settings" className="flex gap-2">
+                  <Icons.settings />
+                  <span>Settings</span>
+                </Link>
+              )}
             </DropdownMenuItem>
           </DropdownMenuGroup>
           {session.user?.role === UserRole.Administrator && (
             <DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="flex gap-2">
-                  <Icons.dashboard />
-                  <span>Admin panel</span>
-                </Link>
+                {isMobile ? (
+                  <SheetClose asChild>
+                    <Link href="/dashboard" className="flex gap-2">
+                      <Icons.dashboard />
+                      <span>Admin panel</span>
+                    </Link>
+                  </SheetClose>
+                ) : (
+                  <Link href="/dashboard" className="flex gap-2">
+                    <Icons.dashboard />
+                    <span>Admin panel</span>
+                  </Link>
+                )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
           )}
@@ -70,10 +101,19 @@ export async function AccountNav() {
             <DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="flex gap-2">
-                  <Icons.dashboard />
-                  <span>Control panel</span>
-                </Link>
+                {isMobile ? (
+                  <SheetClose asChild>
+                    <Link href="/dashboard" className="flex gap-2">
+                      <Icons.dashboard />
+                      <span>Control panel</span>
+                    </Link>
+                  </SheetClose>
+                ) : (
+                  <Link href="/dashboard" className="flex gap-2">
+                    <Icons.dashboard />
+                    <span>Control panel</span>
+                  </Link>
+                )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
           )}
