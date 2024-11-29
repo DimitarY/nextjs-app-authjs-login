@@ -58,6 +58,10 @@ export function SignUpForm({ className }: SignUpFormProps) {
     onError: () => {
       setError("An unexpected error occurred. Please try again.");
     },
+    onSettled: () => {
+      form.setValue("password", "");
+      setPasswordVisible(false);
+    },
   });
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -133,7 +137,7 @@ export function SignUpForm({ className }: SignUpFormProps) {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        placeholder="●●●●●●●●"
+                        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
                         {...field}
                         type={passwordVisible ? "text" : "password"}
                         disabled={server_RegisterActionIsPending}

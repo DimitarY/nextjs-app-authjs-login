@@ -54,6 +54,9 @@ export function SignInForm({ className }: SignInFormProps) {
       onError: () => {
         setError("An unexpected error occurred. Please try again.");
       },
+      onSettled: () => {
+        form.setValue("password", "");
+      },
     });
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -112,7 +115,7 @@ export function SignInForm({ className }: SignInFormProps) {
                   </div>
                   <FormControl>
                     <Input
-                      placeholder="●●●●●●●●"
+                      placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
                       {...field}
                       type="password"
                       disabled={server_LoginActionIsPending}
