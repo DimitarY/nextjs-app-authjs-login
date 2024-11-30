@@ -8,6 +8,8 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     DATABASE_URL: z.string().url(),
+    RESEND_API_KEY: z.string(),
+    RESEND_DOMAIN: z.string(),
     CUID_FINGERPRINT: z.string(),
     AUTH_SECRET: z.string(),
     AUTH_URL: z.string().url(),

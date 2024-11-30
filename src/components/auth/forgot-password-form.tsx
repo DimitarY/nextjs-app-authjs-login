@@ -1,5 +1,6 @@
 "use client";
 
+import { ForgotPasswordAction } from "@/actions/auth";
 import { FormError, FormSuccess } from "@/components/form-message";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,15 +33,17 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
     mutate: server_ForgotPasswordAction,
     isPending: server_ForgotPasswordIsPending,
   } = useMutation({
-    mutationFn: async (values: z.infer<typeof ForgotPasswordSchema>) => {
-      console.log(values);
-    },
+    mutationFn: ForgotPasswordAction,
     onMutate: () => {
       setSuccess("");
       setError("");
     },
-    onSuccess: () => {
-      setSuccess("Password reset email sent! Please check your inbox.");
+    onSuccess: (data) => {
+      if (!data.success) {
+        setError(data.error);
+      } else {
+        setSuccess("Password reset email sent! Please check your inbox.");
+      }
     },
     onError: () => {
       setError("An unexpected error occurred. Please try again.");
@@ -99,7 +102,7 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
               type="submit"
               disabled={server_ForgotPasswordIsPending}
             >
-              Register
+              Send Reset Email
             </Button>
           </div>
         </form>
