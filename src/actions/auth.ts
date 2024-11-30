@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { CheckUserExistsByEmail, RegisterUserByEmail } from "@/db/querys";
 import { env } from "@/env";
 import { hashPassword } from "@/lib/authUtils";
+import { ratelimit } from "@/lib/ratelimiter";
 import { resend } from "@/lib/resend";
 import {
   ForgotPasswordSchema,
@@ -24,6 +25,15 @@ export const LoginAction = async (
   }
 
   const { email, password } = validatedFields.data;
+
+  const { success } = await ratelimit.login.limit(email);
+
+  if (!success) {
+    return {
+      success: false,
+      error: "Too many login attempts. Please try again later.",
+    };
+  }
 
   try {
     await signIn("credentials", {
@@ -93,6 +103,15 @@ export const ForgotPasswordAction = async (
   }
 
   const { email } = validatedFields.data;
+
+  const { success } = await ratelimit.passwordReset.limit(email);
+
+  if (!success) {
+    return {
+      success: false,
+      error: "Too many password reset attempts. Please try again later.",
+    };
+  }
 
   try {
     const { data, error } = await resend.emails.send({
