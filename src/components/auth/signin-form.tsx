@@ -22,7 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -67,6 +67,15 @@ export function SignInForm({ className }: SignInFormProps) {
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     server_LoginAction(values);
   };
+
+  const { setFocus } = form;
+
+  // Focus password field when an error is set
+  useEffect(() => {
+    if (error) {
+      setFocus("password");
+    }
+  }, [error, setFocus]);
 
   return (
     <div className={cn("flex flex-col justify-center gap-1 p-4", className)}>

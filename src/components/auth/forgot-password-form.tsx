@@ -17,7 +17,7 @@ import { ForgotPasswordSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -63,6 +63,15 @@ export function ForgotPasswordForm({ className }: ForgotPasswordFormProps) {
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
     server_ForgotPasswordAction(values);
   };
+
+  const { setFocus } = form;
+
+  // Focus email field when an error is set
+  useEffect(() => {
+    if (error) {
+      setFocus("email");
+    }
+  }, [error, setFocus]);
 
   return (
     <div className={cn("flex flex-col justify-center gap-1 p-4", className)}>
