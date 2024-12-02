@@ -1,7 +1,15 @@
 import { SignInForm } from "@/components/auth/signin-form";
+import Auth from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-export default function Signup() {
+export default async function Signup() {
+  const session = await Auth();
+
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <div className="mx-6 mt-2 flex flex-row items-center justify-center gap-2">
       <Suspense>

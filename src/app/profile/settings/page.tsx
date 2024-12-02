@@ -1,11 +1,12 @@
 import { GeneralSettings } from "@/components/profile/general-settings";
 import Auth from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Settings() {
   const session = await Auth();
 
   if (!session) {
-    return null;
+    redirect("/");
   }
 
   return (
