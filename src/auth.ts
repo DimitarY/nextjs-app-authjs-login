@@ -17,7 +17,7 @@ const databaseAdapter = DrizzleAdapter(db, {
   verificationTokensTable: verificationToken,
 });
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, signIn, signOut, unstable_update, auth } = NextAuth({
   adapter: databaseAdapter,
   ...authConfig,
   jwt: {

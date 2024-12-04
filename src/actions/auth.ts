@@ -1,17 +1,22 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn, unstable_update } from "@/auth";
 import { PasswordResetEmail } from "@/components/email-template";
 import { siteConfig } from "@/config/site";
+import { db } from "@/db";
 import { CheckUserExistsByEmail, RegisterUserByEmail } from "@/db/querys";
+import { user } from "@/db/schema/user";
 import { env } from "@/env";
-import { hashPassword } from "@/lib/authUtils";
+import { hashPassword, validateSession } from "@/lib/authUtils";
 import { resend } from "@/lib/resend";
 import {
   ForgotPasswordSchema,
   LoginSchema,
   RegisterSchema,
 } from "@/schemas/auth";
+import { utapi } from "@/uploadthing/server";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 export const LoginAction = async (
@@ -119,3 +124,39 @@ export const ForgotPasswordAction = async (
     return { success: false, error: "An unexpected error occurred." };
   }
 };
+
+/**
+ * Used to optimistically update the user's image
+ * without waiting for `onUploadComplete` to finish
+ * and updating the database record
+ */
+export async function UpdateUserImageAction(url: string) {
+  await unstable_update({ user: { image: url } });
+  revalidatePath("/", "layout");
+}
+
+export async function RemoveUserImageAction() {
+  try {
+    const session = await validateSession();
+
+    if (!session.user.image || !session.user.id) {
+      return;
+    }
+
+    await unstable_update({ user: { image: null } });
+
+    await db
+      .update(user)
+      .set({ image: null })
+      .where(eq(user.id, session.user.id));
+
+    const key = session.user.image.split("/f/")[1];
+
+    await utapi.deleteFiles(key);
+  } catch (error) {
+    console.error("Error deleting user image:", error);
+    throw error;
+  }
+
+  revalidatePath("/", "layout");
+}

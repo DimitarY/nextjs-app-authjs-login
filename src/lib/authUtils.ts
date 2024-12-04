@@ -1,4 +1,23 @@
+import { auth } from "@/auth";
 import bcrypt from "bcrypt";
+import { Session } from "next-auth";
+
+/**
+ * Validates the session.
+ * This function is intended to be used on the server-side.
+ *
+ * @returns The session.
+ * @throws Will throw an error if the session is invalid.
+ */
+export async function validateSession(): Promise<Session> {
+  const session = await auth();
+
+  if (!session) {
+    throw new Error("Invalid session!");
+  }
+
+  return session;
+}
 
 /**
  * Hashes a password using bcrypt.
