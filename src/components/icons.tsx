@@ -1,4 +1,5 @@
 import {
+  CalendarIcon,
   ChevronRight,
   Command,
   CropIcon,
@@ -26,4 +27,5 @@ export const Icons = {
   logOut: LogOut,
   crop: CropIcon,
   thrash: Trash2Icon,
+  calendar: CalendarIcon,
 };

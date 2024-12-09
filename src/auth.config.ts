@@ -58,6 +58,7 @@ export default {
           name: userRecord.name,
           email: userRecord.email,
           image: userRecord.image,
+          joinedAt: userRecord.joinedAt,
           emailVerified: userRecord.emailVerified,
           role: userRecord.role,
           accounts: userRecord.accounts,

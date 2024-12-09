@@ -51,6 +51,7 @@ export async function GetUserByEmail(
         name: user.name,
         email: user.email,
         image: user.image,
+        joinedAt: user.joinedAt,
         emailVerified: user.emailVerified,
         role: user.role,
         hash: user.hash,
@@ -60,6 +61,39 @@ export async function GetUserByEmail(
       .from(user)
       .leftJoin(account, eq(user.id, account.userId))
       .where(eq(user.email, email))
+      .groupBy(user.id);
+
+    return result[0] || null; // Ensure it returns a single user or null
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Failed to fetch user");
+  }
+}
+
+/**
+ * Fetches a single user by their id.
+ *
+ * @param {string} id - The id of the user to fetch.
+ * @returns {Promise<UserInterface | null>} A promise that resolves to the user object or null if not found.
+ */
+export async function GetUserById(id: string): Promise<UserInterface | null> {
+  try {
+    const result = await db
+      .select({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        joinedAt: user.joinedAt,
+        emailVerified: user.emailVerified,
+        role: user.role,
+        hash: user.hash,
+        totpIsConfirmed: user.totpIsConfirmed,
+        accounts: sql<string[]>`ARRAY_AGG(${account.provider})`.as("accounts"),
+      })
+      .from(user)
+      .leftJoin(account, eq(user.id, account.userId))
+      .where(eq(user.id, id))
       .groupBy(user.id);
 
     return result[0] || null; // Ensure it returns a single user or null

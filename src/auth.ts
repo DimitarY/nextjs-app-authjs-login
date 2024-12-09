@@ -60,9 +60,10 @@ export const { handlers, signIn, signOut, unstable_update, auth } = NextAuth({
 
 declare module "next-auth" {
   interface User {
-    emailVerified: Date | null;
     role: string;
+    emailVerified: Date | null;
     accounts: string[];
+    joinedAt: Date;
   }
 
   interface Session {

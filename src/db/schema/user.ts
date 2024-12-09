@@ -18,6 +18,7 @@ export const user = pgTable("user", {
   hash: text("hash"),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  joinedAt: timestamp("joinedAt", { mode: "date" }).defaultNow().notNull(),
   totpSecret: text("totpSecret"),
   totpIsConfirmed: timestamp("totpIsConfirmed", { mode: "date" }),
   lastTotpToken: text("lastTotpToken"),
@@ -32,6 +33,7 @@ export interface UserInterface {
   role: UserRoleType;
   hash: string | null;
   image: string | null;
+  joinedAt: Date;
   totpIsConfirmed: Date | null;
   accounts: string[];
 }
