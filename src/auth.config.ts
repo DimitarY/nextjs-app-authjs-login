@@ -73,8 +73,8 @@ export default {
   ],
   pages: {
     signIn: "/auth/sign-in",
-    // error: "/auth/error", // TODO: Create this page
-    // signOut: "/auth/sign-out", // TODO: Create this page
+    error: "/auth/error",
+    signOut: "/auth/sign-out",
     // verifyRequest: "/auth/verify-request", // TODO: Create this page
   },
   session: {
