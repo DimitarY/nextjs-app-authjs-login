@@ -9,3 +9,12 @@ export const GeneralSettings_Profile = z.object({
     .toLowerCase()
     .trim(),
 });
+
+export const SecuritySettings_Password = z.object({
+  currentPassword: z.string().min(1, "Current password is required").trim(),
+  newPassword: z.string().min(1, "New password is required").trim(), // TODO: Add regex validation
+});
+
+export const DeleteProfile = z.object({
+  accept: z.boolean().default(false).optional(),
+});
