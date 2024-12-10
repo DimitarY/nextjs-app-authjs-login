@@ -3,11 +3,12 @@ import { GetUserById } from "@/db/querys";
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function ProfileView({ params }: Props) {
-  const user = await GetUserById(params.id);
+  const resolvedParams = await params;
+  const user = await GetUserById(resolvedParams.id);
 
   if (!user) {
     notFound();

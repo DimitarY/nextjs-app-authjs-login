@@ -15,8 +15,8 @@ enum Error {
 const errorMap = {
   [Error.Configuration]: (
     <p>
-      We're experiencing a technical issue. Please try again later or contact
-      support if the problem continues.
+      We&#39;re experiencing a technical issue. Please try again later or
+      contact support if the problem continues.
     </p>
   ),
   [Error.OAuthAccountNotLinked]: (
