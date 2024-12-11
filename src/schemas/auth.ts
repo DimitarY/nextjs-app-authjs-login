@@ -29,3 +29,12 @@ export const ForgotPasswordSchema = z.object({
     .toLowerCase()
     .trim(),
 });
+
+export const MagicLinkSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email address")
+    .toLowerCase()
+    .trim(),
+});

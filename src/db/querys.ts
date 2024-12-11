@@ -143,3 +143,32 @@ export async function CheckUserExistsByEmail(email: string): Promise<boolean> {
     throw new Error("Failed to fetch user");
   }
 }
+
+/**
+ * Checks if a user with the given email exists in the database and can use magic link.
+ *
+ * @param {string} email - The email of the user to check.
+ * @returns {Promise<{ exists: boolean; useMagicLink: boolean }>} - An object containing the result of the check.
+ */
+export async function CheckUserExistsAndUseMagicLinkByEmail(
+  email: string,
+): Promise<
+  | { exists: true; useMagicLink: true }
+  | { exists: false; useMagicLink: false }
+  | { exists: true; useMagicLink: false }
+> {
+  try {
+    const result = await db.select().from(user).where(eq(user.email, email));
+
+    if (result[0].useMagicLink) {
+      return { exists: true, useMagicLink: true };
+    } else if (result.length === 0) {
+      return { exists: false, useMagicLink: false };
+    } else {
+      return { exists: true, useMagicLink: false };
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Failed to fetch user");
+  }
+}

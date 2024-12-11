@@ -4,7 +4,11 @@ import { signIn, unstable_update } from "@/auth";
 import { PasswordResetEmail } from "@/components/email-template";
 import { siteConfig } from "@/config/site";
 import { db } from "@/db";
-import { CheckUserExistsByEmail, RegisterUserByEmail } from "@/db/querys";
+import {
+  CheckUserExistsAndUseMagicLinkByEmail,
+  CheckUserExistsByEmail,
+  RegisterUserByEmail,
+} from "@/db/querys";
 import { user } from "@/db/schema/user";
 import { env } from "@/env";
 import { hashPassword, validateSession } from "@/lib/authUtils";
@@ -12,6 +16,7 @@ import { resend } from "@/lib/resend";
 import {
   ForgotPasswordSchema,
   LoginSchema,
+  MagicLinkSchema,
   RegisterSchema,
 } from "@/schemas/auth";
 import { utapi } from "@/uploadthing/server";
@@ -100,6 +105,7 @@ export const ForgotPasswordAction = async (
   const { email } = validatedFields.data;
 
   try {
+    // TODO: Need to check if user exists
     const { data, error } = await resend.emails.send({
       from: `${siteConfig.name} <no-reply@${env.RESEND_DOMAIN}>`,
       to: [email],
@@ -122,6 +128,40 @@ export const ForgotPasswordAction = async (
     console.error("ForgotPasswordAction error:", error);
 
     return { success: false, error: "An unexpected error occurred." };
+  }
+};
+
+export const MagicLinkAction = async (
+  values: z.infer<typeof MagicLinkSchema>,
+): Promise<
+  | { success: true; useCredentials: true }
+  | { success: true; useCredentials: false }
+  | { success: false; error: string }
+> => {
+  const validatedFields = MagicLinkSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    throw new Error("Invalid fields!");
+  }
+
+  const { email } = validatedFields.data;
+
+  try {
+    const { exists, useMagicLink } =
+      await CheckUserExistsAndUseMagicLinkByEmail(email);
+
+    if (!exists) {
+      return { success: false, error: "User not found" };
+    } else if (!useMagicLink) {
+      return { success: true, useCredentials: true };
+    } else {
+      // TODO: Send magic link
+      return { success: true, useCredentials: false };
+    }
+  } catch (error) {
+    console.error("MagicLinkAction error:", error);
+
+    return { success: false, error: "Invalid login credentials" };
   }
 };
 

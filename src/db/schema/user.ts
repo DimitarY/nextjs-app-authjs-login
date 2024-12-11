@@ -1,7 +1,7 @@
 import { user_roles, UserRole, UserRoleType } from "@/db/schema/enumerated";
 import { env } from "@/env";
 import { init } from "@paralleldrive/cuid2";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 const createId = init({
   length: 12,
@@ -19,6 +19,8 @@ export const user = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   joinedAt: timestamp("joinedAt", { mode: "date" }).defaultNow().notNull(),
+  allowMagicLink: boolean("allowMagicLink").default(false).notNull(),
+  useMagicLink: boolean("useMagicLink").default(false).notNull(),
   totpSecret: text("totpSecret"),
   totpIsConfirmed: timestamp("totpIsConfirmed", { mode: "date" }),
   lastTotpToken: text("lastTotpToken"),
