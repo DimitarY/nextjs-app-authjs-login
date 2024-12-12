@@ -51,6 +51,7 @@ export const { handlers, signIn, signOut, unstable_update, auth } = NextAuth({
       const accounts: string[] = await GetUserProviders(user.id);
 
       session.user.role = user.role;
+      session.user.hash = user.hash != null;
       session.user.accounts = accounts;
 
       return session;
@@ -61,9 +62,12 @@ export const { handlers, signIn, signOut, unstable_update, auth } = NextAuth({
 declare module "next-auth" {
   interface User {
     role: string;
+    hash: boolean;
     emailVerified: Date | null;
-    accounts: string[];
     joinedAt: Date;
+    allowMagicLink: boolean;
+    useMagicLink: boolean;
+    accounts: string[];
   }
 
   interface Session {

@@ -36,6 +36,8 @@ export interface UserInterface {
   hash: string | null;
   image: string | null;
   joinedAt: Date;
+  allowMagicLink: boolean;
+  useMagicLink: boolean;
   totpIsConfirmed: Date | null;
   accounts: string[];
 }

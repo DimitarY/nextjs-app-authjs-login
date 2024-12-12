@@ -57,10 +57,13 @@ export default {
           id: userRecord.id,
           name: userRecord.name,
           email: userRecord.email,
+          hash: userRecord.hash != null,
           image: userRecord.image,
           joinedAt: userRecord.joinedAt,
           emailVerified: userRecord.emailVerified,
           role: userRecord.role,
+          allowMagicLink: userRecord.allowMagicLink,
+          useMagicLink: userRecord.useMagicLink,
           accounts: userRecord.accounts,
         };
 

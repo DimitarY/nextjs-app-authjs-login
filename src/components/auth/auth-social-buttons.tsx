@@ -9,9 +9,15 @@ import { VscGithubAlt } from "react-icons/vsc";
 
 interface AuthSocialButtonsProps {
   className?: string;
+  googleButtonText?: string;
+  githubButtonText?: string;
 }
 
-export function AuthSocialButtons({ className }: AuthSocialButtonsProps) {
+export function AuthSocialButtons({
+  className,
+  googleButtonText = "Sign in with Google",
+  githubButtonText = "Sign in with Github",
+}: AuthSocialButtonsProps) {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
@@ -29,7 +35,7 @@ export function AuthSocialButtons({ className }: AuthSocialButtonsProps) {
         variant="link"
         onClick={() => onClick("google")}
       >
-        <FcGoogle className="h-5 w-5" />
+        <FcGoogle className="h-5 w-5" /> {googleButtonText}
       </Button>
       <Button
         size="lg"
@@ -37,7 +43,7 @@ export function AuthSocialButtons({ className }: AuthSocialButtonsProps) {
         variant="link"
         onClick={() => onClick("github")}
       >
-        <VscGithubAlt className="h-5 w-5" />
+        <VscGithubAlt className="h-5 w-5" /> {githubButtonText}
       </Button>
     </div>
   );

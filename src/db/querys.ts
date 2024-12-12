@@ -55,6 +55,8 @@ export async function GetUserByEmail(
         emailVerified: user.emailVerified,
         role: user.role,
         hash: user.hash,
+        allowMagicLink: user.allowMagicLink,
+        useMagicLink: user.useMagicLink,
         totpIsConfirmed: user.totpIsConfirmed,
         accounts: sql<string[]>`ARRAY_AGG(${account.provider})`.as("accounts"),
       })
@@ -88,6 +90,8 @@ export async function GetUserById(id: string): Promise<UserInterface | null> {
         emailVerified: user.emailVerified,
         role: user.role,
         hash: user.hash,
+        allowMagicLink: user.allowMagicLink,
+        useMagicLink: user.useMagicLink,
         totpIsConfirmed: user.totpIsConfirmed,
         accounts: sql<string[]>`ARRAY_AGG(${account.provider})`.as("accounts"),
       })

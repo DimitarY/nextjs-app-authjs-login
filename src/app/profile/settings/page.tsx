@@ -12,11 +12,23 @@ export default async function Settings() {
     redirect("/");
   }
 
+  const allowMagicLink = session.user.allowMagicLink;
+  const magicLinkEnabled = session.user.useMagicLink;
+  const hasPassword = session.user.hash;
+  const accounts = session.user.accounts;
+  const emailVerified = session.user.emailVerified != null;
+
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-5">
       <ProfilePictureCard user={session.user} />
       <GeneralSettings user={session.user} />
-      <SecuritySettings />
+      <SecuritySettings
+        MagicLinkEnable={magicLinkEnabled}
+        MagicLinkAllow={allowMagicLink}
+        UsePassword={hasPassword}
+        Accounts={accounts}
+        EmailVerified={emailVerified}
+      />
       <DeleteAccount />
     </div>
   );
