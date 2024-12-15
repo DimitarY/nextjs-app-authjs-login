@@ -1,7 +1,14 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
-  "plugins": ["@tanstack/query"],
+  "plugins": [
+    "eslint-plugin-drizzle",
+    "@tanstack/query",
+    "eslint-plugin-react-compiler"
+  ],
   "rules": {
-    "@tanstack/query/exhaustive-deps": "error"
+    "react-compiler/react-compiler": "error",
+    "@tanstack/query/exhaustive-deps": "error",
+    "drizzle/enforce-delete-with-where": "error",
+    "drizzle/enforce-update-with-where": "error"
   }
 }
