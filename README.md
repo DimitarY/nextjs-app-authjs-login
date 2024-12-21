@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Getting Started
 
-## Getting Started
+## Environment Variable Setup
 
-First, run the development server:
+Follow these steps to set up environment variables:
+
+### 1. Create a `.env` file
+
+#### On Linux:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+touch .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### On Windows:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+type nul > .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Define the following environment variables in the `.env` file:
 
-## Learn More
+| Environment Variable Name | Description                                |
+| ------------------------- | ------------------------------------------ |
+| `DATABASE_URL`            | Connection string for the database         |
+| `RESEND_API_KEY`          | API key for Resend service                 |
+| `RESEND_DOMAIN`           | Domain for Resend email service            |
+| `CUID_FINGERPRINT`        | Fingerprint token for CUID generation      |
+| `AUTH_URL`                | Set to `${NEXT_PUBLIC_BASE_URL}`           |
+| `AUTH_SECRET`             | Authentication secret for session handling |
+| `AUTH_GOOGLE_ID`          | Google OAuth client ID                     |
+| `AUTH_GOOGLE_SECRET`      | Google OAuth client secret                 |
+| `AUTH_GITHUB_ID`          | GitHub OAuth client ID                     |
+| `AUTH_GITHUB_SECRET`      | GitHub OAuth client secret                 |
+| `UPLOADTHING_TOKEN`       | API token for UploadThing service          |
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Create a `.env.development` file
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### On Linux:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+touch .env.development
+```
 
-## Deploy on Vercel
+#### On Windows:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+type nul > .env.development
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Define the following environment variables in the `.env.development` file:
+
+| Environment Variable Name | Description                       |
+| ------------------------- | --------------------------------- |
+| `NEXT_PUBLIC_BASE_URL`    | Base URL for the development site |
+| `UPLOADTHING_IS_DEV`      | Set to `true` for development     |
+
+### 5. Create a `.env.production` file
+
+#### On Linux:
+
+```bash
+touch .env.production
+```
+
+#### On Windows:
+
+```bash
+type nul > .env.production
+```
+
+### 6. Define the following environment variables in the `.env.production` file:
+
+| Environment Variable Name  | Description                                                                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_BASE_URL`     | Base URL for the production site                                                                                                          |
+| `UPLOADTHING_CALLBACK_URL` | Callback URL for UploadThing, see [documentation](https://docs.uploadthing.com/faq#my-callback-runs-in-development-but-not-in-production) |
+
+---
+
+## Install Dependencies
+
+Before running the development server, make sure to install the required packages. In your project directory, run:
+
+```bash
+pnpm install
+```
+
+---
+
+## Quick Start
+
+To start the development server, use the following command:
+
+```bash
+pnpm dev
+```
+
+Then, open [https://localhost:3000](https://localhost:3000) in your browser to view the application.
+
+---
+
+## Additional Information
+
+### Styling
+
+The site is styled using:
+
+- [`Tailwind CSS`](https://tailwindcss.com) for utility-first CSS.
+- [`shadcn/ui`](https://ui.shadcn.com/) for advanced user interface components. Note that these components have been customized for this project.
+
+### Authentication
+
+Authentication functionality is powered by [`Auth.js`](https://authjs.dev/).
