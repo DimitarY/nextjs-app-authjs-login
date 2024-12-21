@@ -3,6 +3,7 @@ export type SiteConfig = {
   title: string;
   description: string;
   url: string;
+  copyright: string;
   mainNav: MainNavItem[];
 };
 

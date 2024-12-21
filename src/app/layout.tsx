@@ -1,4 +1,5 @@
 import CookieConsent from "@/components/cookie-consent";
+import Footer from "@/components/footer";
 import MainNav from "@/components/nav/main-nav";
 import { ReactQueryClientProvider } from "@/components/react-query-client-provider";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
@@ -41,6 +42,7 @@ export default function RootLayout({
           <ReactQueryClientProvider>
             <main className="flex-1 overflow-hidden">{children}</main>
           </ReactQueryClientProvider>
+          <Footer />
           <Toaster />
           <CookieConsent />
           <TailwindIndicator />
