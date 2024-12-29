@@ -1,13 +1,21 @@
 import ProfileInfo from "@/components/profile/profile-info";
 import { GetUserById } from "@/db/querys";
-import { notFound } from "next/navigation";
+import Auth from "@/lib/auth";
+import { notFound, redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
 export default async function ProfileView({ params }: Props) {
+  const session = await Auth();
+
   const resolvedParams = await params;
+
+  if (session && session.user.id === resolvedParams.id) {
+    redirect("/profile");
+  }
+
   const user = await GetUserById(resolvedParams.id);
 
   if (!user) {
