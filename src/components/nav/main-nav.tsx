@@ -24,16 +24,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MainNavItem } from "@/types";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import Link from "next/link";
 
 interface MainNavProps {
   items: MainNavItem[];
+  session: Session | null;
 }
 
-export default function MainNav({ items }: MainNavProps) {
-  const { data: session } = useSession();
-
+export default function MainNav({ items, session }: MainNavProps) {
   return (
     <>
       <Sheet>

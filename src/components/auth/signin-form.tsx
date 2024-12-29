@@ -45,7 +45,7 @@ function CredentialsForm({ email }: { email?: string }) {
           setError(data.error);
         } else {
           const callbackUrl = search.get("callbackUrl");
-          await navigate(callbackUrl || "/"); // TODO: failed to get redirect response TypeError: fetch failed (Maybe react-dom RC issue)
+          await navigate(callbackUrl || "/");
         }
       },
       onError: () => {

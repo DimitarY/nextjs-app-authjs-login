@@ -6,11 +6,11 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
+import Auth from "@/lib/auth";
 import "@/styles/globals.css";
 import { uploadRouter } from "@/uploadthing/server";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
 import React from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
@@ -19,11 +19,13 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await Auth();
+
   return (
     <html lang="en">
       <body>
@@ -35,9 +37,7 @@ export default function RootLayout({
         >
           <NextSSRPlugin routerConfig={extractRouterConfig(uploadRouter)} />
           <header className="flex h-header w-full shrink-0 items-center px-4 md:px-6">
-            <SessionProvider>
-              <MainNav items={siteConfig.mainNav} />
-            </SessionProvider>
+            <MainNav items={siteConfig.mainNav} session={session} />
           </header>
           <ReactQueryClientProvider>
             <main className="flex-1 overflow-hidden">{children}</main>
