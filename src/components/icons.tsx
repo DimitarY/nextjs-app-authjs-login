@@ -8,6 +8,7 @@ import {
   LogOut,
   Menu,
   Moon,
+  PencilIcon,
   Settings,
   SunMedium,
   Trash2Icon,
@@ -28,4 +29,5 @@ export const Icons = {
   crop: CropIcon,
   thrash: Trash2Icon,
   calendar: CalendarIcon,
+  pencil: PencilIcon,
 };

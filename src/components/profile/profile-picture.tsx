@@ -126,16 +126,19 @@ export function ProfilePictureCard(props: { user: User }) {
             {newImageLoading && (
               <div className="absolute inset-6 flex animate-pulse items-center justify-center rounded-2xl bg-black/80" />
             )}
-            <Image
-              src={output?.preview ?? props.user.image ?? "/fallback.svg"}
-              onClick={() => inputRef.current?.click()}
-              alt="Profile Picture"
-              width={128}
-              height={128}
-              className="cursor-pointer rounded-2xl hover:opacity-75"
-              priority
-              unoptimized={!!output?.preview} // Disable Next.js image optimization for non-static URLs
-            />
+            <div className="relative">
+              <Image
+                src={output?.preview ?? props.user.image ?? "/fallback.svg"}
+                onClick={() => inputRef.current?.click()}
+                alt="Profile Picture"
+                width={128}
+                height={128}
+                className="cursor-pointer rounded-2xl hover:opacity-75"
+                priority
+                unoptimized={!!output?.preview} // Disable Next.js image optimization for non-static URLs
+              />
+              <Icons.pencil className="pointer-events-none absolute bottom-1 right-1 h-auto w-8 rounded-md bg-black/50 p-1 text-white" />
+            </div>
           </div>
         )}
       </div>
