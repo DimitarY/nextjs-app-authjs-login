@@ -4,7 +4,7 @@ export function TailwindIndicator() {
   if (env.NODE_ENV === "production") return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 flex items-center justify-center">
+    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex items-center justify-center">
       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-800 p-3 font-mono text-xs text-white">
         {[
           { label: "xs", visible: "block sm:hidden" },
